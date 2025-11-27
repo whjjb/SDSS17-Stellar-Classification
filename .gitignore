@@ -1,0 +1,18 @@
+# 忽略 Python 编译文件
+__pycache__/
+*.py[cod]
+
+# 忽略 PyCharm 配置文件夹
+.idea/
+
+# 忽略虚拟环境
+venv/
+.venv/
+env/
+sdss17-ml-py311/
+
+# 忽略训练产出
+outputs/
+
+# 忽略 macOS 系统文件 (防止协作者是 Mac 用户时产生垃圾文件)
+.DS_Store
