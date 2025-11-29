@@ -1,8 +1,8 @@
 # SDSS17 Stellar Classification (STAR/GALAXY/QSO)
 
-用机器学习对 Kaggle 的 **Stellar Classification Dataset — SDSS17** 数据进行三分类（STAR / GALAXY / QSO）。本仓库主线方法为 **XGBoost**、**MLP（神经网络）**和**RandomForest**，**Logistic** 作为参考基线。
+This project implements a full machine learning pipeline for 3-class stellar object classification on the SDSS17 dataset, using Logistic Regression, Random Forest, XGBoost, and MLP. It includes hyperparameter search, cross-validation, confusion-matrix based analysis, and rich visualization tools.
 
-> 数据集网址：https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17/data
+用机器学习对 Kaggle 的 **Stellar Classification Dataset — SDSS17** 数据进行三分类（STAR / GALAXY / QSO）。本仓库主线方法为 **XGBoost**、**MLP（神经网络）**和**RandomForest**，**Logistic** 作为参考基线。
 
 ---
 
@@ -45,7 +45,9 @@ tqdm~=4.67.1
 ```
 data/sdss17.csv
 ```
-脚本会自动丢弃 ID/采集元数据列，保留并派生光度学相关特征（`u,g,r,i,z, redshift` 以及颜色指数 `u-g, g-r, r-i, i-z, u-r, g-i`）。
+数据处理脚本会自动丢弃ID和采集元数据列，保留并派生光度学相关特征（`u,g,r,i,z, redshift` 以及颜色指数 `u-g, g-r, r-i, i-z, u-r, g-i`）。
+
+> 数据集网址：https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17/data
 
 ---
 
@@ -160,26 +162,43 @@ sdss17_ml/
 1.模型排行榜 (Leaderboard)
 - 文件：`leaderboard_all_models.png`
 - 说明：展示各模型的宏观F1分数(CV)对比，帮助快速比较不同算法的整体性能
+![Model Leaderboard](figs/leaderboard_all_models.png)
 
 2.交叉验证折线图 (Fold Curves)
 - 文件：`figs/<model>/cv_fold_scores.png`
 - 说明：显示每个交叉验证折的准确率和宏观F1分数，用于评估模型稳定
+![Fold Curves](figs/logistic/cv_fold_scores.png)
+![Fold Curves](figs/random_forest/cv_fold_scores.png)
+![Fold Curves](figs/xgboost/cv_fold_scores.png)
+![Fold Curves](figs/mlp/cv_fold_scores.png)
 
 3.混淆矩阵网格 (Confusion Matrix Grid)
 - 文件：`figs/<model>/cm_grid_row_norm.png`
 - 说明：展示所有交叉验证折的归一化混淆矩阵，直观显示各类别间的分类准确性及误判模式
+![Confusion Matrix Grid](figs/logistic/cm_grid_row_norm.png)
+![Confusion Matrix Grid](figs/random_forest/cm_grid_row_norm.png)
+![Confusion Matrix Grid](figs/xgboost/cm_grid_row_norm.png)
+![Confusion Matrix Grid](figs/mlp/cm_grid_row_norm.png)
 
 4.类别级指标柱状图 (Per-class Metrics)
 - 文件：`figs/<model>/per_class_bars_lastfold.png`
 - 说明：显示最后一折中每个类别的精确率(Precision)、召回率(Recall)和F1分数
+![Per-class Metrics](figs/logistic/per_class_bars_lastfold.png)
+![Per-class Metrics](figs/random_forest/per_class_bars_lastfold.png)
+![Per-class Metrics](figs/xgboost/per_class_bars_lastfold.png)
+![Per-class Metrics](figs/mlp/per_class_bars_lastfold.png)
 
 5.全局特征重要性柱状图 (Global Feature Importance)
 - 文件：`figs/<model>/top_features_from_joblib.png`
 - 说明：展示模型中最重要的特征，对于树模型显示特征重要性，对于线性模型显示系数绝对
+![Feature Importance](figs/logistic/top_features_from_joblib.png)
+![Feature Importance](figs/random_forest/top_features_from_joblib.png)
+![Feature Importance](figs/xgboost/top_features_from_joblib.png)
 
 6.随机森林树深度分布 (Random Forest Tree Depth)
 - 文件：` figs/random_forest/rf_tree_depth.png`
 - 说明：仅针对随机森林模型，显示各决策树的深度分布情况
+![Tree Depth](figs/random_forest/rf_tree_depth.png)
 
 ### 主要评估指标
 
